@@ -146,8 +146,8 @@ AC_SUBST(EXTRALIBS, [${EXTRALIBS:-''}])
 # Allow the user to specify the AVR CPU type an speed in megahertz.
 # By default, we set the AVR CPU type to be an Arduino Uno.
 #
-AC_ARG_VAR(MMCU, "AVR processor type (atmega328p)")
-AC_SUBST(MMCU, [${MMCU:-'atmega328p'}])
+AC_ARG_VAR(MMCU, "AVR processor type (atmega644p)")
+AC_SUBST(MMCU, [${MMCU:-'atmega644p'}])
 
 AC_ARG_VAR(MHZ, "AVR processor speed in MHz. (16)")
 AC_SUBST(MHZ, [${MHZ:-'16'}])
@@ -155,8 +155,8 @@ AC_SUBST(MHZ, [${MHZ:-'16'}])
 #
 # These parameters get passed to avrdude on 'make install'
 #
-AC_ARG_VAR(AVRDUDE_PARTNO, "avrdude part number id. (m328p)")
-AC_SUBST(AVRDUDE_PARTNO, [${AVRDUDE_PARTNO:-'m328p'}])
+AC_ARG_VAR(AVRDUDE_PARTNO, "avrdude part number id. (m644p)")
+AC_SUBST(AVRDUDE_PARTNO, [${AVRDUDE_PARTNO:-'m644p'}])
 
 AC_ARG_VAR(AVRDUDE_PROGRAMMER, "avrdude programmer id. (arduino)")
 AC_SUBST(AVRDUDE_PROGRAMMER, [${AVRDUDE_PROGRAMMER:-'arduino'}])
