@@ -31,7 +31,7 @@ http://objects.reprap.org/wiki/Mendel_User_Manual:_RepRapGCodes
 #include <ctype.h>
 #include <HardwareSerial.h>
 #include <avr/pgmspace.h>
-#include "WProgram.h"
+#include "Arduino.h"
 #include "vectors.h"
 #include "configuration.h"
 #include "intercom.h"

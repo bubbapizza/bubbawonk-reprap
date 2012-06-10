@@ -4,7 +4,7 @@
 #include "extruder.h"
 #include "vectors.h"
 #include "cartesian_dda.h"
-#include <stdio.h>
+//#include <stdio.h>
 
 
 // Initialise X, Y and Z.  The extruder is initialized
