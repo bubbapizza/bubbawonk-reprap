@@ -24,7 +24,7 @@
 
 # Set the CPU type when compiling.
 FIRMWARE = fiveD
-AM_CFLAGS = -Wall -Os -mmcu=$(MMCU) -DF_CPU=$(MHZ)000000 -I $(includedir) -ffunction-sections
+AM_CXXFLAGS = -Wall -Os -mmcu=$(MMCU) -DF_CPU=$(MHZ)000000 -I $(includedir) -ffunction-sections
 
 
 # Instructions for building the executable file.
