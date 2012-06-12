@@ -31,7 +31,8 @@ AM_CXXFLAGS = -Wall -Os -mmcu=$(MMCU) -DF_CPU=$(MHZ)000000 -I $(includedir) -ffu
 noinst_PROGRAMS = fiveD.elf 
 noinst_HEADERS = vectors.h configuration.h intercom.h pins.h extruder.h \
    cartesian_dda.h ThermistorTable.h
-fiveD_elf_SOURCES = FiveD_GCode_Interpreter.cpp cartesian_dda.cpp
+fiveD_elf_SOURCES = FiveD_GCode_Interpreter.cpp cartesian_dda.cpp \
+   process_g_code.cpp extruder.cpp intercom.cpp
 fiveD_elf_LDADD = -lm 
 fiveD_elf_LDFLAGS = --gc-sections
 noinst_DATA = fiveD.hex
