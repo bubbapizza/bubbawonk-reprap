@@ -38,6 +38,8 @@ http://objects.reprap.org/wiki/Mendel_User_Manual:_RepRapGCodes
 #include "pins.h"
 #include "extruder.h"
 #include "cartesian_dda.h"
+#include "FiveD_GCode_Interpreter.h"
+//#include "process_g_code.h"
 
 // Maintain a list of extruders...
 
@@ -223,75 +225,6 @@ void loop()
 
 // The move buffer
 
-inline void cancelAndClearQueue()
-{
-	tail = head;	// clear buffer
-	for(int i=0;i<BUFFER_SIZE;i++)
-		cdda[i]->kill();
-}
-
-inline bool qFull()
-{
-  if(tail == 0)
-    return head == (BUFFER_SIZE - 1);
-  else
-    return head == (tail - 1);
-}
-
-inline bool qEmpty()
-{
-   return tail == head && !cdda[tail]->active();
-}
-
-inline void qMove(const FloatPoint& p)
-{
-  while(qFull())
-  {
-    manageAllExtruders();
-    delay(WAITING_DELAY);
-  }
-  byte h = head; 
-  h++;
-  if(h >= BUFFER_SIZE)
-    h = 0;
-  cdda[h]->set_target(p);
-  head = h;
-}
-
-inline void dQMove()
-{
-  if(qEmpty())
-    return;
-  byte t = tail;  
-  t++;
-  if(t >= BUFFER_SIZE)
-    t = 0;
-  cdda[t]->dda_start();
-  tail = t; 
-}
-
-inline void setUnits(bool u)
-{
-   for(byte i = 0; i < BUFFER_SIZE; i++)
-     cdda[i]->set_units(u); 
-}
-
-
-inline void setPosition(const FloatPoint& p)
-{
-  where_i_am = p;  
-}
-
-void blink()
-{
-  led = !led;
-  if(led)
-      digitalWrite(DEBUG_PIN, 1);
-  else
-      digitalWrite(DEBUG_PIN, 0);
-} 
-
-
 //******************************************************************************************
 
 // Interrupt functions
@@ -420,31 +353,6 @@ byte getTimerResolution(const long& delay)
 	//its really slow... hopefully we can just get by with super slow.
 	else
 		return 4;
-}
-
-
-// Depending on how much work the interrupt function has to do, this is
-// pretty accurate between 10 us and 0.1 s.  At fast speeds, the time
-// taken in the interrupt function becomes significant, of course.
-
-// Note - it is up to the user to call enableTimerInterrupt() after a call
-// to this function.
-
-inline void setTimer(long delay)
-{
-	// delay is the delay between steps in microsecond ticks.
-	//
-	// we break it into 5 different resolutions based on the delay. 
-	// then we set the resolution based on the size of the delay.
-	// we also then calculate the timer ceiling required. (ie what the counter counts to)
-	// the result is the timer counts up to the appropriate time and then fires an interrupt.
-
-        // Actual ticks are 0.0625 us, so multiply delay by 16
-        
-        delay <<= 4;
-        
-	setTimerCeiling(getTimerCeiling(delay));
-	setTimerResolution(getTimerResolution(delay));
 }
 
 
