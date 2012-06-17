@@ -19,6 +19,7 @@ http://objects.reprap.org/wiki/Mendel_User_Manual:_RepRapGCodes
 #include "vectors.h"
 #include "cartesian_dda.h"
 #include "FiveD_GCode_Interpreter.h"
+#include "process_g_code.h"
 #include <string.h>
 
 /* bit-flags for commands and parameters */
@@ -168,18 +169,11 @@ boolean abs_mode = true; //0 = incremental; 1 = absolute
 
 float extruder_speed = 0;
 
-int scan_int(char *str, int *valp);
-int scan_float(char *str, float *valp);
+//int scan_int(char *str, int *valp);
+//int scan_float(char *str, float *valp);
 
 GcodeParser gc;	/* string parse result */
 
-
-//init our string processing
-inline void init_process_string()
-{
-	serial_count = 0;
-  comment = false;
-}
 
 // Get a command and process it
 
