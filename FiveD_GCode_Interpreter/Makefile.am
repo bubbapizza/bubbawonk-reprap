@@ -33,7 +33,7 @@ noinst_HEADERS = vectors.h configuration.h intercom.h pins.h extruder.h \
    cartesian_dda.h ThermistorTable.h
 fiveD_elf_SOURCES = FiveD_GCode_Interpreter.cpp cartesian_dda.cpp \
    process_g_code.cpp extruder.cpp intercom.cpp
-fiveD_elf_LDADD = -lm -larduino
+fiveD_elf_LDADD = -larduino -lc -lm -lc
 fiveD_elf_LDFLAGS = --gc-sections
 noinst_DATA = fiveD.hex
 

@@ -39,7 +39,6 @@ http://objects.reprap.org/wiki/Mendel_User_Manual:_RepRapGCodes
 #include "extruder.h"
 #include "cartesian_dda.h"
 #include "FiveD_GCode_Interpreter.h"
-//#include "process_g_code.h"
 
 // Maintain a list of extruders...
 
@@ -120,6 +119,16 @@ ISR(TIMER1_COMPA_vect)
  
   enableTimerInterrupt();
 }
+
+void blink()
+{
+  led = !led;
+  if(led)
+      digitalWrite(DEBUG_PIN, 1);
+  else
+      digitalWrite(DEBUG_PIN, 0);
+} 
+
 
 void setup()
 {
