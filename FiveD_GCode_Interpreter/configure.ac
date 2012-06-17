@@ -101,10 +101,10 @@ AC_NO_EXECUTABLES
 AC_CANONICAL_HOST
 AC_CANONICAL_BUILD
 
-# Unless the user specified some CXXFLAGS or CFLAGS, set the flags 
-# to blank.
-AC_SUBST(CXXFLAGS, [${CXXFLAGS:-''}])
-AC_SUBST(CFLAGS, [${CFLAGS:-''}])
+# By default, assume we're compiling against the arduino standard libs
+# installed to /usr/local/include/arduino-standard.
+AC_SUBST(CXXFLAGS, [${CXXFLAGS:-'-I /usr/local/include/arduino-standard'}])
+AC_SUBST(CFLAGS, [${CFLAGS:-'-I /usr/local/include/arduino-standard'}])
 
 # Minimum version of automake is 1.8.
 AM_INIT_AUTOMAKE([1.8])
@@ -151,6 +151,8 @@ AC_SUBST(MMCU, [${MMCU:-'atmega644p'}])
 
 AC_ARG_VAR(MHZ, "AVR processor speed in MHz. (16)")
 AC_SUBST(MHZ, [${MHZ:-'16'}])
+
+AC_SUBST(LDFLAGS, [${LDFLAGS:-"-L /usr/local/lib/${MMCU}-${MHZ}"}])
 
 #
 # These parameters get passed to avrdude on 'make install'
