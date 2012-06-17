@@ -1,0 +1,49 @@
+The following comes from a post on the AVR forums from the user
+dl8dtl about a weird bug that shows up when linking the AVR math 
+library to the executable.  The LDFLAGS parameter must be "-lc -lm -lc" 
+instead of just "-lm".
+
+----------------
+ > I too would like an explanation of what is going on with
+ > -lc -lm -lc
+ 
+ Suppose something dragged in from the first libc.a causes an
+ undefined reference to say, __lesf2. This symbol is not going
+ to be resolved within that library, so the linker continues to the
+ next library, libm.a. It will find that symbol there, but some
+ other module obtained from libm.a might cause additional undefined
+ symbol references, which have to be resolved from libc.a -- but
+ that library has already been processed, so without mentioning it
+ again on the commandline, the linker won't reconsider it here.
+ 
+ Just keep in mind that the compiler adds further libraries to the
+ end of the linker commandline (IIRC, it's «-lc -lgcc -lc», but
+ offhand I'm not sure). It's not clear to me *why* the original
+ problem happens, but it appears to drag in something from libgcc.a
+ that should rather be overridden by a symbol of the same name in
+ libm.a, but libm.a wasn't in the linker order at that time
+ (presumably, it had already been processed).
+ 
+ Yes, all this sucks, libm.a should not define any symbols that
+ rather belong into libgcc.a. There are hysterical raisins that
+ caused the current situation, and with GCC moving towards a stricter
+ license for its "runtime" (i.e., libgcc.a) as part of the overall
+ switch from GPLv2 to GPLv3, I'm afraid that won't even change in
+ future. That's all politics here, I'm sorry about that. The main
+ reason for why some of these implementations went into libm.a
+ rather than straight into libgcc.a is ease of maintenance: the
+ (political) procedure to get something into avr-libc is much less
+ complicated than getting it into GCC (and thus libgcc.a). It's not
+ only the GPL-vs.-BSD license issue, but also things like the FSF
+ insisting on a "copyright assignment" where the paperwork already
+ scares away some people, some others are already scared away by the
+ plain fact they should be *forced* to assign their copyright to the
+ FSF (rather than getting the praised freedom, and decide themselves),
+ and then there are even those who tried to file the paperwork, yet
+ the FSF never managed to complete the process (and that guy's been
+ someone *really* knowledgable about GCC, who could have been a nice
+ helping hand for AVR-GCC development).
+ 
+ Sorry for the rant. I just wanted to explain why there are (only)
+ political rather than technical reasons for the current mess, which
+ this problem appears to be a part of.

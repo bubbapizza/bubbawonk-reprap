@@ -33,6 +33,12 @@ noinst_HEADERS = vectors.h configuration.h intercom.h pins.h extruder.h \
    cartesian_dda.h ThermistorTable.h
 fiveD_elf_SOURCES = FiveD_GCode_Interpreter.cpp cartesian_dda.cpp \
    process_g_code.cpp extruder.cpp intercom.cpp
+
+# To link this thing, we have to use the AVR math libraries but there's a
+# weird bug that crops up if you just put "-lm" instead of "-lc -lm -lc".
+# The linker will give you an error saying  "multiple definition of `__ltsf2'"
+# For a more detailed explanation, see the NOTES file.
+#
 fiveD_elf_LDADD = -larduino -lc -lm -lc
 fiveD_elf_LDFLAGS = --gc-sections
 noinst_DATA = fiveD.hex
