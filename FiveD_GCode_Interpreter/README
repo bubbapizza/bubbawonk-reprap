@@ -1,0 +1,21 @@
+This fiveD firmware package uses the autotools version of the arduino 
+stdlib.  To get started, download the arduino-stdlib-1.0.0.tar.gz and
+run the following:
+
+ tar zxvf arduino-stdlib-1.0.0.tar.gz
+ cd arduino-stdlib-1.0.0
+ ./configure MMCU=atmega644p
+ make
+ sudo make install
+
+Then, download this fiveD firmware package, extract it, cd to it and
+run the following:
+
+ ./configure CXXFLAGS="-I /usr/local/include/arduino-standard"
+ make
+
+This will generate a fiveD.hex file which can be uploaded to your reprap
+electronics using the following command:
+
+ make install
+
