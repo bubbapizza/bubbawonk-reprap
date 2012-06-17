@@ -182,4 +182,6 @@ inline bool cartesian_dda::read_switch(byte pin, bool inv)
 		return digitalRead(pin) && digitalRead(pin);
 }
 
+extern cartesian_dda *cdda[BUFFER_SIZE];
+
 #endif

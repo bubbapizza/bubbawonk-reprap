@@ -1,10 +1,14 @@
 
 
+#include "Arduino.h"
 #include "configuration.h"
 #include "pins.h"
 #include "ThermistorTable.h"
 #include "intercom.h"
 #include "extruder.h" 
+#include "vectors.h"
+#include "cartesian_dda.h"
+#include "global.h"
 
 // Keep all extruders up to temperature etc.
 

@@ -32,15 +32,10 @@ ISR(TIMER1_COMPA_vect);
 
 
 // INLINE FUNCTIONS
+#include "global.h"
 
 inline void setPosition(const FloatPoint&p){
   where_i_am = p;  
-};
-
-
-inline void setUnits(bool u){
-   for(byte i = 0; i < BUFFER_SIZE; i++)
-     cdda[i]->set_units(u); 
 };
 
 
